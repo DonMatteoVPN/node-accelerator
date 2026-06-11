@@ -34,6 +34,10 @@ jobs:
           - "ubuntu:24.04"   # noble
     container:
       image: ${{ matrix.image }}
+      # protect.sh DRY_RUN вызывает 'nft -c', который валидирует ruleset через netlink
+      # к netfilter ядра — без CAP_NET_ADMIN это «Operation not permitted». --privileged
+      # даёт те же права, что есть у скрипта на реальной ноде под root.
+      options: --privileged
     steps:
       - name: Install git (нужен checkout) + базовые сертификаты
         run: apt-get update -qq && apt-get install -y -qq --no-install-recommends git ca-certificates
