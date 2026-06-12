@@ -21,6 +21,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 SCRIPTS="$SCRIPT_DIR/scripts"
 # NA_REF — ветка/тег для curl|bash-режима (по умолчанию main). Для прода пиньте тег.
 NA_REF="${NA_REF:-main}"
+# NA_REF уходит в URL модулей — запрещаем path-traversal/инъекцию (увод на чужой репо).
+[[ "$NA_REF" =~ ^[A-Za-z0-9._/-]+$ && "$NA_REF" != *..* ]] || { echo "[x] NA_REF '$NA_REF' невалиден"; exit 1; }
 REPO_URL="${NA_REPO_URL:-https://raw.githubusercontent.com/jestivald/node-accelerator/$NA_REF}"
 
 # curl|bash — подтянуть модули
