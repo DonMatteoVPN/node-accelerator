@@ -18,6 +18,10 @@ jobs:
       - name: Report (severity=style — информационно, не блокирует)
         continue-on-error: true
         run: shellcheck -x --severity=style install.sh scripts/*.sh scripts/lib/*.sh
+      - name: apply-path smoke (set -u — полный apply protect.sh через стабы)
+        # Ловит unbound-vars в ветках, исполняемых только при реальном применении
+        # (модули fleet/blocklists/ctguard, маркер, save_conf) — их не видит DRY_RUN/bash -n.
+        run: bash tests/apply-smoke.sh
 
   # ── Smoke-тесты на матрице дистрибутивов ────────────────────────────────────
   # Ловит ровно тот класс регрессий, из-за которых появился этот PR: установка

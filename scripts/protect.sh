@@ -893,7 +893,7 @@ EOF
     if [[ "$NA_CTG_ENFORCE" == "1" ]]; then
         ok "ctguard ENFORCE: фантом-холдеры эвиктятся. Лог: journalctl -t na-ctguard"
     else
-        warn "ctguard в OBSERVE (только лог). Убедись по journalctl -t na-ctguard, что кандидаты = только атакеры (live≤$LIVE_FLOOR), затем NA_CTG_ENFORCE=1 + ре-ран protect."
+        warn "ctguard в OBSERVE (только лог). Убедись по journalctl -t na-ctguard, что кандидаты = только атакеры (live≤$NA_CTG_LIVE_FLOOR), затем NA_CTG_ENFORCE=1 + ре-ран protect."
     fi
 fi
 
